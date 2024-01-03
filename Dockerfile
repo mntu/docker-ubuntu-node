@@ -6,7 +6,7 @@ ARG TARGETPLATFORM
 # gpg keys listed at https://github.com/nodejs/node#release-team
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 18.16.1
+ENV NODE_VERSION 20.10.0
 
 RUN export PLATFORM=$(if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then echo "x64"; else echo "arm64"; fi) \
   buildDeps='xz-utils curl ca-certificates gnupg2 dirmngr' \
@@ -38,7 +38,7 @@ RUN export PLATFORM=$(if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then echo "x64"
   && apt-get purge -y --auto-remove $buildDeps \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl nano
 RUN npm install yarn -g
 
 CMD [ "npm", "--version" ]
