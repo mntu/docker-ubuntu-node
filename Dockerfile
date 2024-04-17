@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:22.04
 
 ARG TARGETPLATFORM
 
@@ -11,7 +11,7 @@ ENV NODE_VERSION 20.10.0
 RUN export PLATFORM=$(if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then echo "x64"; else echo "arm64"; fi) \
   buildDeps='xz-utils curl ca-certificates gnupg2 dirmngr' \
   && set -x \
-  && apt-get update && apt-get upgrade -y && apt-get install -y $buildDeps --no-install-recommends \
+  && apt-get update && apt-get install -y $buildDeps --no-install-recommends --fix-missing \
   && rm -rf /var/lib/apt/lists/* \
   # gpg keys listed at https://github.com/nodejs/node#release-keys
   && set -ex \
